@@ -1,8 +1,5 @@
 package com.start.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,16 +14,17 @@ public class UserController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	@PostMapping("/create")
+	@PostMapping("/user/create")
 	public String create(User user) {
 		System.out.println("user  : " + user.toString());
 		userRepository.save(user);		
-		return "redirect:/list";
+		return "redirect:/user/list";
 	}
 	
-	@GetMapping("/list")
+	@GetMapping("/user/list")
 	public String list(Model model) {
 		model.addAttribute("users", userRepository.findAll());
-		return "list";
+		System.out.println(userRepository.findAll().toString());
+		return "/user/list";
 	}
 }
