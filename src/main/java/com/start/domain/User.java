@@ -15,6 +15,27 @@ public class User {
 	private String userid;
 	private String password;
 	private String name;
+	
+	public Long getId() {
+		return id;
+	}
+
+	public String getUserid() {
+		return userid;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
 	private String email;
 
 	public void setUserid(String userid) {
