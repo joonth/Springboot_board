@@ -1,5 +1,7 @@
 package com.start.web;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,5 +43,13 @@ public class UserController {
 		model.addAttribute("users", userRepository.findAll());
 		System.out.println(userRepository.findAll().toString());
 		return "/user/list";
+	}
+	
+	@PostMapping("/{id}")
+	public String update(@PathVariable Long id, User updateUser) {
+		User user = userRepository.findById(id).get();
+		user.update(updateUser);
+		userRepository.save(user);
+		return "redirect:/users";
 	}
 }
