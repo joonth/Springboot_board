@@ -1,0 +1,1 @@
+INSERT INTO USER VALUES(0,'test@test', 'test', 'test', 'test');
