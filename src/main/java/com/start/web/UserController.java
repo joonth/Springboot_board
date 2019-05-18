@@ -35,7 +35,7 @@ public class UserController {
 			return "redirect:/users/loginForm";
 		}
 		
-		if(!password.equals(user.getPassword())) {
+		if(!user.matchPassword(password)) {
 			System.out.println("password 실패");
 			return "redirect:/users/loginForm";
 		}
@@ -64,7 +64,7 @@ public class UserController {
 		}
 		
 		User sessiondUser = HttpSessionUtils.getUserFromSession(session);
-		if(!id.equals(sessiondUser.getId())) {
+		if(!sessiondUser.matchId(id)) {
 			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
 		}
 		
@@ -80,7 +80,7 @@ public class UserController {
 		}
 		
 		User sessiondUser = HttpSessionUtils.getUserFromSession(session);
-		if(!id.equals(sessiondUser.getId())) {
+		if(!sessiondUser.matchId(id)) {
 			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
 		}
 		
