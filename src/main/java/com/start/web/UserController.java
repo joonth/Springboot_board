@@ -1,6 +1,5 @@
 package com.start.web;
 
-import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -52,9 +51,19 @@ public class UserController {
 	}
 	
 	@GetMapping("/{id}/form")
-	public String updateForm(@PathVariable Long id, Model model) {
+	public String updateForm(@PathVariable Long id, Model model, HttpSession session) {
+		Object tempUser = session.getAttribute("user");
+		if(tempUser == null) {
+			return "redirect:/users/loginForm";
+		}
+		
+		User sessiondUser = (User) tempUser;
+		if(!id.equals(sessiondUser.getId())) {
+			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
+		}
+		
 		User user = userRepository.findById(id).get();
-		model.addAttribute("user", user);
+		model.addAttribute("infoUser", user);
 		return "/user/updateForm";
 	}
 	
@@ -73,9 +82,19 @@ public class UserController {
 	}
 	
 	@PutMapping("/{id}")
-	public String update(@PathVariable Long id, User updateUser) {
+	public String update(@PathVariable Long id, User updatedUser, HttpSession session) {
+		Object tempUser = session.getAttribute("user");
+		if(tempUser == null) {
+			return "redirect:/users/loginForm";
+		}
+		
+		User sessiondUser = (User) tempUser;
+		if(!id.equals(sessiondUser.getId())) {
+			throw new IllegalStateException("자신의 정보만 수정할 수 있습니다.");
+		}
+		
 		User user = userRepository.findById(id).get();
-		user.update(updateUser);
+		user.update(updatedUser);
 		userRepository.save(user);
 		return "redirect:/users";
 	}
